@@ -13,7 +13,7 @@ ta m3c
 ```
 
 Stata code:
-```{r}
+```{stata}
 gen sba=0
 replace sba=1 if m3a==1 | m3b==1 | m3c==1
 ```
