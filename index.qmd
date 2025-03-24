@@ -1,37 +1,23 @@
 ---
-title: "MPIE.github.io"
+title: "MPIE: Analyzing survey data"
 ---
+To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
 # Create indicator
 
-Exploration: 
-```{stata}
-des m3*
-ta m3a
-ta m3b
-ta m3c
-```
-
 Stata code:
-```{stata}
-gen sba=0
-replace sba=1 if m3a==1 | m3b==1 | m3c==1
+```{r}
+# STATA chunk of code
+# gen sba=0
+# replace sba=1 if m3a==1 | m3b==1 | m3c==1
 ```
 
 R code:
 ```{r}
-data$sba = 0
-data$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1
-data$sba[data$m3a==9] = 0
+# data$sba = 0
+# data$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1
+# data$sba[data$m3a==9] = 0
 ```
 
 
 
-# Design-based analysis of survey data
-
-
-
-
-
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
