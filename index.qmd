@@ -3,9 +3,12 @@ title: "MPIE Lecture 7: Analyzing survey data"
 ---
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
-# Explore variables
 
-# Create indicator
+# Generating Coverage Indicators from Survey Data
+
+## Step 5: explore variables 
+
+## Step 6: Create SBA Variable
 
 Stata code:
 ```{r, eval=FALSE}
@@ -16,10 +19,23 @@ replace sba=. if m3a==9
 
 R code:
 ```{r, eval=FALSE}
-data$sba = 0
-data$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1
-data$sba[data$m3a==9] = .
+data$sba <- 0
+data$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] <- 1
+data$sba[data$m3a==9] <- .
 ```
+
+## Step 7: Check SBA Variable
+
+
+## Step 8: Label Variable
+
+
+# Design-based Analysis of Survey Data
+
+
+
+
+
 
 
 
