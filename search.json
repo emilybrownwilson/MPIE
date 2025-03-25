@@ -9,7 +9,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "MPIE: Analyzing survey data",
+    "title": "MPIE Lecture 7: Analyzing survey data",
     "section": "",
     "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\nExplore variables\n\n\nCreate indicator\nStata code:\n\ngen sba=0\nreplace sba=1 if m3a==1 | m3b==1 | m3c==1\nreplace sba=. if m3a==9\n\nR code:\n\ndata$sba = 0\ndata$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1\ndata$sba[data$m3a==9] = ."
   }
