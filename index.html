@@ -146,8 +146,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#explore-variables" id="toc-explore-variables" class="nav-link active" data-scroll-target="#explore-variables">Explore variables</a></li>
-  <li><a href="#create-indicator" id="toc-create-indicator" class="nav-link" data-scroll-target="#create-indicator">Create indicator</a></li>
+  <li><a href="#generating-coverage-indicators-from-survey-data" id="toc-generating-coverage-indicators-from-survey-data" class="nav-link active" data-scroll-target="#generating-coverage-indicators-from-survey-data">Generating Coverage Indicators from Survey Data</a>
+  <ul class="collapse">
+  <li><a href="#step-5-explore-variables" id="toc-step-5-explore-variables" class="nav-link" data-scroll-target="#step-5-explore-variables">Step 5: explore variables</a></li>
+  <li><a href="#step-6-create-sba-variable" id="toc-step-6-create-sba-variable" class="nav-link" data-scroll-target="#step-6-create-sba-variable">Step 6: Create SBA Variable</a></li>
+  <li><a href="#step-7-check-sba-variable" id="toc-step-7-check-sba-variable" class="nav-link" data-scroll-target="#step-7-check-sba-variable">Step 7: Check SBA Variable</a></li>
+  <li><a href="#step-8-label-variable" id="toc-step-8-label-variable" class="nav-link" data-scroll-target="#step-8-label-variable">Step 8: Label Variable</a></li>
+  </ul></li>
+  <li><a href="#design-based-analysis-of-survey-data" id="toc-design-based-analysis-of-survey-data" class="nav-link" data-scroll-target="#design-based-analysis-of-survey-data">Design-based Analysis of Survey Data</a></li>
   </ul>
 </nav>
     </div>
@@ -174,11 +180,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
-<section id="explore-variables" class="level1">
-<h1>Explore variables</h1>
+<section id="generating-coverage-indicators-from-survey-data" class="level1">
+<h1>Generating Coverage Indicators from Survey Data</h1>
+<section id="step-5-explore-variables" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-explore-variables">Step 5: explore variables</h2>
 </section>
-<section id="create-indicator" class="level1">
-<h1>Create indicator</h1>
+<section id="step-6-create-sba-variable" class="level2">
+<h2 class="anchored" data-anchor-id="step-6-create-sba-variable">Step 6: Create SBA Variable</h2>
 <p>Stata code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gen sba<span class="ot">=</span><span class="dv">0</span></span>
@@ -187,10 +195,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>R code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba <span class="ot">=</span> <span class="dv">0</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3b<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3c<span class="sc">==</span><span class="dv">1</span>] <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">9</span>] <span class="ot">=</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3b<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3c<span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">9</span>] <span class="ot">&lt;-</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="step-7-check-sba-variable" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-check-sba-variable">Step 7: Check SBA Variable</h2>
+</section>
+<section id="step-8-label-variable" class="level2">
+<h2 class="anchored" data-anchor-id="step-8-label-variable">Step 8: Label Variable</h2>
+</section>
+</section>
+<section id="design-based-analysis-of-survey-data" class="level1">
+<h1>Design-based Analysis of Survey Data</h1>
 
 
 </section>
@@ -286,7 +304,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/emilybrownwilson\.github\.io\/mpie\.github\.io\/");
+      var filterRegex = new RegExp("https:\/\/emilybrownwilson\.github\.io\/mpie\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

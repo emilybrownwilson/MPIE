@@ -11,6 +11,34 @@
     "href": "index.html",
     "title": "MPIE Lecture 7: Analyzing survey data",
     "section": "",
-    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\nExplore variables\n\n\nCreate indicator\nStata code:\n\ngen sba=0\nreplace sba=1 if m3a==1 | m3b==1 | m3c==1\nreplace sba=. if m3a==9\n\nR code:\n\ndata$sba = 0\ndata$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1\ndata$sba[data$m3a==9] = ."
+    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "index.html#step-5-explore-variables",
+    "href": "index.html#step-5-explore-variables",
+    "title": "MPIE Lecture 7: Analyzing survey data",
+    "section": "Step 5: explore variables",
+    "text": "Step 5: explore variables"
+  },
+  {
+    "objectID": "index.html#step-6-create-sba-variable",
+    "href": "index.html#step-6-create-sba-variable",
+    "title": "MPIE Lecture 7: Analyzing survey data",
+    "section": "Step 6: Create SBA Variable",
+    "text": "Step 6: Create SBA Variable\nStata code:\n\ngen sba=0\nreplace sba=1 if m3a==1 | m3b==1 | m3c==1\nreplace sba=. if m3a==9\n\nR code:\n\ndata$sba &lt;- 0\ndata$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] &lt;- 1\ndata$sba[data$m3a==9] &lt;- ."
+  },
+  {
+    "objectID": "index.html#step-7-check-sba-variable",
+    "href": "index.html#step-7-check-sba-variable",
+    "title": "MPIE Lecture 7: Analyzing survey data",
+    "section": "Step 7: Check SBA Variable",
+    "text": "Step 7: Check SBA Variable"
+  },
+  {
+    "objectID": "index.html#step-8-label-variable",
+    "href": "index.html#step-8-label-variable",
+    "title": "MPIE Lecture 7: Analyzing survey data",
+    "section": "Step 8: Label Variable",
+    "text": "Step 8: Label Variable"
   }
 ]
