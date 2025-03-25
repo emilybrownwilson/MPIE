@@ -149,9 +149,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#generating-coverage-indicators-from-survey-data" id="toc-generating-coverage-indicators-from-survey-data" class="nav-link active" data-scroll-target="#generating-coverage-indicators-from-survey-data">Generating Coverage Indicators from Survey Data</a>
   <ul class="collapse">
   <li><a href="#step-5-explore-variables" id="toc-step-5-explore-variables" class="nav-link" data-scroll-target="#step-5-explore-variables">Step 5: explore variables</a></li>
-  <li><a href="#step-6-create-sba-variable" id="toc-step-6-create-sba-variable" class="nav-link" data-scroll-target="#step-6-create-sba-variable">Step 6: Create SBA Variable</a></li>
-  <li><a href="#step-7-check-sba-variable" id="toc-step-7-check-sba-variable" class="nav-link" data-scroll-target="#step-7-check-sba-variable">Step 7: Check SBA Variable</a></li>
-  <li><a href="#step-8-label-variable" id="toc-step-8-label-variable" class="nav-link" data-scroll-target="#step-8-label-variable">Step 8: Label Variable</a></li>
+  <li><a href="#step-6-create-sba-variable" id="toc-step-6-create-sba-variable" class="nav-link" data-scroll-target="#step-6-create-sba-variable">Step 6: create SBA variable</a></li>
+  <li><a href="#step-7-check-sba-variable" id="toc-step-7-check-sba-variable" class="nav-link" data-scroll-target="#step-7-check-sba-variable">Step 7: check SBA variable</a></li>
+  <li><a href="#step-8-label-variable" id="toc-step-8-label-variable" class="nav-link" data-scroll-target="#step-8-label-variable">Step 8: label Variable</a></li>
   </ul></li>
   <li><a href="#design-based-analysis-of-survey-data" id="toc-design-based-analysis-of-survey-data" class="nav-link" data-scroll-target="#design-based-analysis-of-survey-data">Design-based Analysis of Survey Data</a></li>
   </ul>
@@ -179,14 +179,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
-<section id="generating-coverage-indicators-from-survey-data" class="level1">
-<h1>Generating Coverage Indicators from Survey Data</h1>
-<section id="step-5-explore-variables" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-explore-variables">Step 5: explore variables</h2>
+<section id="generating-coverage-indicators-from-survey-data" class="level2">
+<h2 class="anchored" data-anchor-id="generating-coverage-indicators-from-survey-data">Generating Coverage Indicators from Survey Data</h2>
+<section id="step-5-explore-variables" class="level3">
+<h3 class="anchored" data-anchor-id="step-5-explore-variables">Step 5: explore variables</h3>
 </section>
-<section id="step-6-create-sba-variable" class="level2">
-<h2 class="anchored" data-anchor-id="step-6-create-sba-variable">Step 6: Create SBA Variable</h2>
+<section id="step-6-create-sba-variable" class="level3">
+<h3 class="anchored" data-anchor-id="step-6-create-sba-variable">Step 6: create SBA variable</h3>
 <p>Stata code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>gen sba<span class="ot">=</span><span class="dv">0</span></span>
@@ -200,15 +199,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">9</span>] <span class="ot">&lt;-</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="step-7-check-sba-variable" class="level2">
-<h2 class="anchored" data-anchor-id="step-7-check-sba-variable">Step 7: Check SBA Variable</h2>
+<section id="step-7-check-sba-variable" class="level3">
+<h3 class="anchored" data-anchor-id="step-7-check-sba-variable">Step 7: check SBA variable</h3>
 </section>
-<section id="step-8-label-variable" class="level2">
-<h2 class="anchored" data-anchor-id="step-8-label-variable">Step 8: Label Variable</h2>
+<section id="step-8-label-variable" class="level3">
+<h3 class="anchored" data-anchor-id="step-8-label-variable">Step 8: label Variable</h3>
 </section>
 </section>
-<section id="design-based-analysis-of-survey-data" class="level1">
-<h1>Design-based Analysis of Survey Data</h1>
+<section id="design-based-analysis-of-survey-data" class="level2">
+<h2 class="anchored" data-anchor-id="design-based-analysis-of-survey-data">Design-based Analysis of Survey Data</h2>
 
 
 </section>
