@@ -3,20 +3,22 @@ title: "MPIE: Analyzing survey data"
 ---
 To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
 
+# Explore variables
+
 # Create indicator
 
 Stata code:
-```{r}
-# STATA chunk of code
-# gen sba=0
-# replace sba=1 if m3a==1 | m3b==1 | m3c==1
+```{r, eval=FALSE}
+gen sba=0
+replace sba=1 if m3a==1 | m3b==1 | m3c==1
+replace sba=. if m3a==9
 ```
 
 R code:
-```{r}
-# data$sba = 0
-# data$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1
-# data$sba[data$m3a==9] = 0
+```{r, eval=FALSE}
+data$sba = 0
+data$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1
+data$sba[data$m3a==9] = .
 ```
 
 

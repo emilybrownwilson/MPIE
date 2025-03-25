@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "MPIE: Analyzing survey data",
     "section": "",
-    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\nCreate indicator\nStata code:\n\n# STATA chunk of code\n# gen sba=0\n# replace sba=1 if m3a==1 | m3b==1 | m3c==1\n\nR code:\n\n# data$sba = 0\n# data$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1\n# data$sba[data$m3a==9] = 0"
+    "text": "To learn more about Quarto websites visit https://quarto.org/docs/websites.\n\nCreate indicator\nStata code:\n\n# STATA chunk of code\n# gen sba=0\n# replace sba=1 if m3a==1 | m3b==1 | m3c==1\n\nR code:\n\ndata$sba = 0\ndata$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] = 1\ndata$sba[data$m3a==9] = 0"
   },
   {
     "objectID": "about.html",
