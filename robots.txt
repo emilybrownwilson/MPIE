@@ -1,1 +1,1 @@
-Sitemap: https://emilybrownwilson.github.io/mpie/sitemap.xml
+Sitemap: https://emilybrownwilson.github.io/mpie_lecture7/sitemap.xml
