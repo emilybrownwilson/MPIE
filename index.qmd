@@ -65,6 +65,11 @@ gen nwgt = v005/1000000
 svyset v001 [pweight=nwgt], strata(v023) singleunit(centered)
 ```
 
+R code:
+```{r, eval=FALSE}
+# ADD HERE
+```
+
 ### Step 4: Look at unweighted versus weighted proportions & run estimation
 
 Stata code:
@@ -79,6 +84,10 @@ svy: prop sba
 estat effects
 ```
 
+R code:
+```{r, eval=FALSE}
+# ADD HERE
+```
 
 ### Estimating coverage in a subgroup
 
@@ -89,5 +98,8 @@ svy, subpop(v149): prop sba
 svy: prop sba if v149==0
 ```
 
-
+R code:
+```{r, eval=FALSE}
+# ADD HERE
+```
 
