@@ -4,7 +4,8 @@ title: "MPIE Lecture 7: Analyzing survey data"
 
 ## Generating Coverage Indicators from Survey Data
 
-### Load the child recode from Nigeria's 2013 DHS (NGKRAFL.DTA) into Stata or R: 
+### Load the child recode from Nigeria's 2013 DHS (NGKRAFL.DTA) into Stata or R:
+
 ### R users may need to install/load libraries
 R code:
 ```{r, eval=FALSE}
