@@ -93,6 +93,7 @@ svyset v001 [pweight=nwgt], strata(v023) singleunit(centered)
 
 R code:
 ```{r, eval=FALSE}
+library(survey)
 data$wt <- data$v005/1000000
 data <- data %>% filter(v023!=60) # Only 1 PSU in this cluster which is problem for svyby
 svydata <- svydesign(id=~v001,strata=~v023, data=data, weights=~wt,nest=TRUE,survey.lonely.psu = "adjust")
@@ -108,6 +109,7 @@ svy: prop sba
 prop sba
 
 svy: prop sba
+svy: prop sba
 estat effects
 ```
 
@@ -118,6 +120,7 @@ prop.table(svytable(~ v106, svydata) )
 
 svyby(~sba, ~v000,  svydata, svymean, na.rm=TRUE)
 
+library(freqtables)
 data %>% filter(!is.na(sba)) %>% freq_table(sba)
 
 svyby(~sba, ~v000,  svydata, svymean, na.rm=TRUE, deff="replace")
