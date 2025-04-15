@@ -104,13 +104,10 @@ Stata code:
 ```{r, eval=FALSE}
 tab v106
 svy:tab v106
-
 svy: prop sba
-
 prop sba
 
 svy: prop sba
-
 estat effects
 ```
 
