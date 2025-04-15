@@ -146,9 +146,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#generating-coverage-indicators-from-survey-data" id="toc-generating-coverage-indicators-from-survey-data" class="nav-link active" data-scroll-target="#generating-coverage-indicators-from-survey-data">Generating Coverage Indicators from Survey Data</a></li>
-  <li><a href="#load-data" id="toc-load-data" class="nav-link" data-scroll-target="#load-data">Load data</a>
+  <li><a href="#generating-coverage-indicators-from-survey-data" id="toc-generating-coverage-indicators-from-survey-data" class="nav-link active" data-scroll-target="#generating-coverage-indicators-from-survey-data">Generating Coverage Indicators from Survey Data</a>
   <ul class="collapse">
+  <li><a href="#load-the-child-recode-from-nigerias-2013-dhs-ngkrafl.dta-into-stata-or-r" id="toc-load-the-child-recode-from-nigerias-2013-dhs-ngkrafl.dta-into-stata-or-r" class="nav-link" data-scroll-target="#load-the-child-recode-from-nigerias-2013-dhs-ngkrafl.dta-into-stata-or-r">Load the child recode from Nigeria’s 2013 DHS (NGKRAFL.DTA) into Stata or R:</a></li>
   <li><a href="#step-5-explore-variables" id="toc-step-5-explore-variables" class="nav-link" data-scroll-target="#step-5-explore-variables">Step 5: explore variables</a></li>
   <li><a href="#step-6-create-sba-variable" id="toc-step-6-create-sba-variable" class="nav-link" data-scroll-target="#step-6-create-sba-variable">Step 6: create SBA variable</a></li>
   <li><a href="#step-7-check-sba-variable" id="toc-step-7-check-sba-variable" class="nav-link" data-scroll-target="#step-7-check-sba-variable">Step 7: check SBA variable</a></li>
@@ -187,9 +187,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="generating-coverage-indicators-from-survey-data" class="level2">
 <h2 class="anchored" data-anchor-id="generating-coverage-indicators-from-survey-data">Generating Coverage Indicators from Survey Data</h2>
+<section id="load-the-child-recode-from-nigerias-2013-dhs-ngkrafl.dta-into-stata-or-r" class="level3">
+<h3 class="anchored" data-anchor-id="load-the-child-recode-from-nigerias-2013-dhs-ngkrafl.dta-into-stata-or-r">Load the child recode from Nigeria’s 2013 DHS (NGKRAFL.DTA) into Stata or R:</h3>
 </section>
-<section id="load-data" class="level2">
-<h2 class="anchored" data-anchor-id="load-data">Load data</h2>
 <section id="step-5-explore-variables" class="level3">
 <h3 class="anchored" data-anchor-id="step-5-explore-variables">Step 5: explore variables</h3>
 <p>Stata code:</p>
@@ -224,17 +224,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>R code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> NGKR6AFL</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3b<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3c<span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3b<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> data<span class="sc">$</span>m3c<span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>m3a<span class="sc">==</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-7-check-sba-variable" class="level3">
 <h3 class="anchored" data-anchor-id="step-7-check-sba-variable">Step 7: check SBA variable</h3>
+<p>Stata code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ta sba m3a, mi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(data<span class="sc">$</span>sba, data<span class="sc">$</span>m3a, <span class="at">exclude=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="step-8-label-variable" class="level3">
 <h3 class="anchored" data-anchor-id="step-8-label-variable">Step 8: label Variable</h3>
+<p>Stata code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>la var sba</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>la def yn <span class="dv">1</span><span class="st">"Yes"</span> <span class="dv">0</span><span class="st">"No"</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>la val sba yn</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ta sba</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>sba<span class="sc">==</span><span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="st">"No"</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>sba[data<span class="sc">$</span>sba<span class="sc">==</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">"Yes"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(data<span class="sc">$</span>sba))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 </section>
 <section id="design-based-analysis-of-survey-data" class="level2">
@@ -243,43 +263,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="step-3-svyset-your-data">Step 3: svyset your data</h3>
 <p>Stata code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gen nwgt <span class="ot">=</span> v005<span class="sc">/</span><span class="dv">1000000</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>svyset v001 [pweight<span class="ot">=</span>nwgt], <span class="fu">strata</span>(v023) <span class="fu">singleunit</span>(centered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>gen nwgt <span class="ot">=</span> v005<span class="sc">/</span><span class="dv">1000000</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>svyset v001 [pweight<span class="ot">=</span>nwgt], <span class="fu">strata</span>(v023) <span class="fu">singleunit</span>(centered)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>R code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="step-4-look-at-unweighted-versus-weighted-proportions-run-estimation" class="level3">
 <h3 class="anchored" data-anchor-id="step-4-look-at-unweighted-versus-weighted-proportions-run-estimation">Step 4: Look at unweighted versus weighted proportions &amp; run estimation</h3>
 <p>Stata code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tab v106</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span>tab v106</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop sba</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>prop sba</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop sba </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>estat effects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tab v106</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span>tab v106</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop sba</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>prop sba</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop sba </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>estat effects</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>R code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="estimating-coverage-in-a-subgroup" class="level3">
 <h3 class="anchored" data-anchor-id="estimating-coverage-in-a-subgroup">Estimating coverage in a subgroup</h3>
 <p>Stata code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ta v149</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>svy, <span class="fu">subpop</span>(v149)<span class="sc">:</span> prop sba</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop sba <span class="cf">if</span> v149<span class="sc">==</span><span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ta v149</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>svy, <span class="fu">subpop</span>(v149)<span class="sc">:</span> prop sba</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop sba <span class="cf">if</span> v149<span class="sc">==</span><span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>R code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ADD HERE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

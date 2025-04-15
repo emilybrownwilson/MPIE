@@ -7,11 +7,18 @@
     "text": "About this site"
   },
   {
-    "objectID": "index.html#load-data",
-    "href": "index.html#load-data",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "MPIE Lecture 7: Analyzing survey data",
-    "section": "Load data",
-    "text": "Load data\n\nStep 5: explore variables\nStata code:\n\ndes m3*\n  \nta m3a\nta m3b\nta m3c\n\nR code:\n\nlibrary(tidyverse)\ndata &lt;- data %&gt;% select(starts_with(\"m3\"))\nstr(data)\n\ntable(data$m3a)\nprop.table(table(data$m3a))\ntable(data$m3b)\nprop.table(table(data$m3b))\ntable(data$m3c)\nprop.table(table(data$m3c))\n\n\n\nStep 6: create SBA variable\nStata code:\n\ngen sba=0\nreplace sba=1 if m3a==1 | m3b==1 | m3c==1\nreplace sba=. if m3a==9\n\nR code:\n\ndata &lt;- NGKR6AFL\ndata$sba &lt;- 0\ndata$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] &lt;- 1\ndata$sba[data$m3a==9] &lt;- NA\n\n\n\nStep 7: check SBA variable\n\n\nStep 8: label Variable"
+    "section": "",
+    "text": "Stata code:\n\ndes m3*\n  \nta m3a\nta m3b\nta m3c\n\nR code:\n\nlibrary(tidyverse)\ndata &lt;- data %&gt;% select(starts_with(\"m3\"))\nstr(data)\n\ntable(data$m3a)\nprop.table(table(data$m3a))\ntable(data$m3b)\nprop.table(table(data$m3b))\ntable(data$m3c)\nprop.table(table(data$m3c))\n\n\n\n\nStata code:\n\ngen sba=0\nreplace sba=1 if m3a==1 | m3b==1 | m3c==1\nreplace sba=. if m3a==9\n\nR code:\n\ndata$sba &lt;- 0\ndata$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] &lt;- 1\ndata$sba[data$m3a==9] &lt;- NA\n\n\n\n\nStata code:\n\nta sba m3a, mi\n\nR code:\n\ntable(data$sba, data$m3a, exclude=NULL)\n\n\n\n\nStata code:\n\nla var sba\nla def yn 1\"Yes\" 0\"No\"\nla val sba yn\nta sba\n\nR code:\n\ndata$sba[data$sba==0] &lt;- \"No\"\ndata$sba[data$sba==1] &lt;- \"Yes\"\nprop.table(table(data$sba))"
+  },
+  {
+    "objectID": "index.html#generating-coverage-indicators-from-survey-data",
+    "href": "index.html#generating-coverage-indicators-from-survey-data",
+    "title": "MPIE Lecture 7: Analyzing survey data",
+    "section": "",
+    "text": "Stata code:\n\ndes m3*\n  \nta m3a\nta m3b\nta m3c\n\nR code:\n\nlibrary(tidyverse)\ndata &lt;- data %&gt;% select(starts_with(\"m3\"))\nstr(data)\n\ntable(data$m3a)\nprop.table(table(data$m3a))\ntable(data$m3b)\nprop.table(table(data$m3b))\ntable(data$m3c)\nprop.table(table(data$m3c))\n\n\n\n\nStata code:\n\ngen sba=0\nreplace sba=1 if m3a==1 | m3b==1 | m3c==1\nreplace sba=. if m3a==9\n\nR code:\n\ndata$sba &lt;- 0\ndata$sba[data$m3a==1 | data$m3b==1 | data$m3c==1] &lt;- 1\ndata$sba[data$m3a==9] &lt;- NA\n\n\n\n\nStata code:\n\nta sba m3a, mi\n\nR code:\n\ntable(data$sba, data$m3a, exclude=NULL)\n\n\n\n\nStata code:\n\nla var sba\nla def yn 1\"Yes\" 0\"No\"\nla val sba yn\nta sba\n\nR code:\n\ndata$sba[data$sba==0] &lt;- \"No\"\ndata$sba[data$sba==1] &lt;- \"Yes\"\nprop.table(table(data$sba))"
   },
   {
     "objectID": "index.html#design-based-analysis-of-survey-data",
