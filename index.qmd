@@ -29,9 +29,6 @@ ta m3c
 R code:
 ```{r, eval=FALSE}
 library(tidyverse)
-data <- data %>% select(starts_with("m3"))
-str(data)
-
 table(data$m3a)
 prop.table(table(data$m3a))
 table(data$m3b)
@@ -96,7 +93,7 @@ svyset v001 [pweight=nwgt], strata(v023) singleunit(centered)
 
 R code:
 ```{r, eval=FALSE}
-data$wt = data$v005/1000000
+data$wt <- data$v005/1000000
 data <- data %>% filter(v023!=60) # Only 1 PSU in this cluster which is problem for svyby
 svydata <- svydesign(id=~v001,strata=~v023, data=data, weights=~wt,nest=TRUE,survey.lonely.psu = "adjust")
 ```
