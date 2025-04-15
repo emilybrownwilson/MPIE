@@ -5,6 +5,14 @@ title: "MPIE Lecture 7: Analyzing survey data"
 ## Generating Coverage Indicators from Survey Data
 
 ### Load the child recode from Nigeria's 2013 DHS (NGKRAFL.DTA) into Stata or R: 
+### R users may need to install/load libraries
+R code:
+```{r, eval=FALSE}
+install.packages("readstata13")
+install.packages("tidyverse")
+install.packages("survey")
+install.packages("freqtables")
+```
 
 ### Step 5: explore variables 
 
@@ -58,7 +66,7 @@ R code:
 table(data$sba, data$m3a, exclude=NULL)
 ```
 
-### Step 8: label Variable
+### Step 8: label variable
 Stata code:
 ```{r, eval=FALSE}
 la var sba
@@ -74,6 +82,7 @@ data$sba[data$sba==1] <- "Yes"
 prop.table(table(data$sba))
 ```
 
+
 ## Design-based Analysis of Survey Data
 
 ### Step 3: svyset your data
@@ -86,7 +95,9 @@ svyset v001 [pweight=nwgt], strata(v023) singleunit(centered)
 
 R code:
 ```{r, eval=FALSE}
-# ADD HERE
+data$wt = data$v005/1000000
+data <- data %>% filter(v023!=60) # Only 1 PSU in this cluster which is problem for svyby
+svydata <- svydesign(id=~v001,strata=~v023, data=data, weights=~wt,nest=TRUE,survey.lonely.psu = "adjust")
 ```
 
 ### Step 4: Look at unweighted versus weighted proportions & run estimation
@@ -97,28 +108,22 @@ tab v106
 svy:tab v106
 
 svy: prop sba
+
 prop sba
 
-svy: prop sba 
 estat effects
 ```
 
 R code:
 ```{r, eval=FALSE}
-# ADD HERE
+prop.table(table(data$v106))
+prop.table(svytable(~ v106, svydata) )
+
+svyby(~sba, ~v000,  svydata, svymean, na.rm=TRUE)
+
+data %>% filter(!is.na(sba)) %>% freq_table(sba)
+
+svyby(~sba, ~v000,  svydata, svymean, na.rm=TRUE, deff="replace")
 ```
 
-### Estimating coverage in a subgroup
-
-Stata code:
-```{r, eval=FALSE}
-ta v149
-svy, subpop(v149): prop sba
-svy: prop sba if v149==0
-```
-
-R code:
-```{r, eval=FALSE}
-# ADD HERE
-```
 
