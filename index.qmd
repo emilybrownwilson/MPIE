@@ -500,3 +500,103 @@ merged <- merged %>%
 ors.adjust.glm <- svyglm(ors ~ survey_label + as.factor(v106) + as.factor(v190) + hv012 + toilet + rural, family = quasibinomial, design = svyset_merge, na.action = na.omit)
 kable(data.frame(OR = exp(coef(ors.adjust.glm)), ci = exp(confint(ors.adjust.glm)))) #create a table of results to include odds ratio + CI
 ```
+
+# Lecture 12: Difference-in-differences analysis for coverage
+
+### Setting-up the data
+Stata code:
+```{r, eval=FALSE}
+cd "/Users/MY_NAME/Desktop/MPIE/data" //change this to directory where anc4_nigeria.dta is stored
+use anc4_nigeria, clear
+
+gen wgt=v005/1000000
+svyset v001 [pw=wgt], strata(v023) singleunit(center)
+
+numlabel, add
+
+gen survey=1 if v007==2013
+replace survey=0 if v007==2008
+
+gen program=region 
+
+gen groups=0 if program==1 & v007==2008  /* intervention group at baseline */
+replace groups=1 if program==1 & v007==2013 /* intervention group at endline */
+replace groups=2 if program==0 & v007==2008 /* comparison group at baseline */
+replace groups=3 if program==0 & v007==2013 /* comparison group at endline */
+```
+
+R code:
+```{r, eval=FALSE}
+dat <- read_dta("/Users/MY_NAME/Desktop/MPIE/data/anc4_nigeria.dta") # change this to where anc4_nigeria.dta is stored
+generate.factors=TRUE)
+
+dat <- dat %>%
+  mutate(wgt = v005/1000000) 
+
+dat$survey <- NA
+dat$survey[dat$v007==2013] <- 1
+dat$survey[dat$v007==2008] <- 0
+
+dat$program <- dat$region
+
+dat$groups <- NA
+dat$groups[dat$program==1 & dat$v007==2008] <- 0 # intervention group at baseline #
+dat$groups[dat$program==1 & dat$v007==2013] <- 1 # intervention group at endline #
+dat$groups[dat$program==0 & dat$v007==2008] <- 2 # comparison group at baseline #
+dat$groups[dat$program==0 & dat$v007==2013] <- 3 # comparison group at endline #
+
+
+svydata <- svydesign(id=~v001, data=dat, weights=~wgt, 
+                     strata=~v023, survey.lonely.psu="adjust", nest=TRUE)
+```
+
+### Option 1: Difference in differences of proportions
+Stata code:
+```{r, eval=FALSE}
+svy: prop anc4, over(groups) 
+
+lincom [[_prop_2]1 - [_prop_2]0] - [[_prop_2]3 - [_prop_2]2]
+```
+
+R code
+```{r, eval=FALSE}
+anc4_dat <- svyby(~anc4, ~groups, svydata, svyciprop, na.rm = TRUE, 
+                  vartype = c("se","ci"), method = "logit")
+anc4_dat
+
+anc4_diff <- svycontrast(anc4_dat, quote((`1`-`0`) - (`3`-`2`))) 
+anc4_diff
+```
+
+### Option 2: Logistic regression
+Stata code:
+```{r, eval=FALSE}
+xi: svy: logit anc4 i.survey*i.program, or 
+
+lincom  _Isurvey_1 + _IsurXpro_1_1, or  
+  
+svy: prop anc4, over(v007 region) 
+```
+
+R code:
+```{r, eval=FALSE}
+anc.adjust.glm <- svyglm(anc4 ~ as.factor(survey)*as.factor(program), 
+                         family = quasibinomial, design = svydata, na.action = na.omit)
+kable(data.frame(OR = exp(coef(anc.adjust.glm)), ci = exp(confint(anc.adjust.glm)))) 
+
+anc4_or <- svycontrast(anc.adjust.glm, quote(`as.factor(survey)1` + `as.factor(survey)1:as.factor(program)1`)) 
+exp(anc4_or)
+
+kable(svyby(~I(anc4 == 0), ~region+v007, design = svydata, svyciprop, vartype="ci", method = "logit"))
+kable(svyby(~I(anc4 == 1), ~region+v007, design = svydata, svyciprop, vartype="ci", method = "logit"))
+```
+
+
+
+
+
+
+
+
+
+
