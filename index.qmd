@@ -529,10 +529,10 @@ replace survey=0 if v007==2008
 
 gen program=region 
 
-gen groups=0 if program==1 & v007==2008  /* intervention group at baseline */
-replace groups=1 if program==1 & v007==2013 /* intervention group at endline */
-replace groups=2 if program==0 & v007==2008 /* comparison group at baseline */
-replace groups=3 if program==0 & v007==2013 /* comparison group at endline */
+gen groups=0 if program==1 & v007==2008 
+replace groups=1 if program==1 & v007==2013 
+replace groups=2 if program==0 & v007==2008 
+replace groups=3 if program==0 & v007==2013 
 ```
 
 R code:
