@@ -549,11 +549,10 @@ dat$survey[dat$v007==2008] <- 0
 dat$program <- dat$region
 
 dat$groups <- NA
-dat$groups[dat$program==1 & dat$v007==2008] <- 0 # intervention group at baseline #
-dat$groups[dat$program==1 & dat$v007==2013] <- 1 # intervention group at endline #
-dat$groups[dat$program==0 & dat$v007==2008] <- 2 # comparison group at baseline #
-dat$groups[dat$program==0 & dat$v007==2013] <- 3 # comparison group at endline #
-
+dat$groups[dat$program==1 & dat$v007==2008] <- 0 
+dat$groups[dat$program==1 & dat$v007==2013] <- 1 
+dat$groups[dat$program==0 & dat$v007==2008] <- 2 
+dat$groups[dat$program==0 & dat$v007==2013] <- 3 
 
 svydata <- svydesign(id=~v001, data=dat, weights=~wgt, 
                      strata=~v023, survey.lonely.psu="adjust", nest=TRUE)
