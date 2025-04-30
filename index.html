@@ -182,6 +182,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#step-5-control-for-other-variables" id="toc-step-5-control-for-other-variables" class="nav-link" data-scroll-target="#step-5-control-for-other-variables">Step 5: Control for other variables</a></li>
   </ul></li>
   </ul></li>
+  <li><a href="#lecture-12-difference-in-differences-analysis-for-coverage" id="toc-lecture-12-difference-in-differences-analysis-for-coverage" class="nav-link" data-scroll-target="#lecture-12-difference-in-differences-analysis-for-coverage">Lecture 12: Difference-in-differences analysis for coverage</a>
+  <ul class="collapse">
+  <li><a href="#setting-up-the-data" id="toc-setting-up-the-data" class="nav-link" data-scroll-target="#setting-up-the-data">Setting-up the data</a></li>
+  <li><a href="#option-1-difference-in-differences-of-proportions" id="toc-option-1-difference-in-differences-of-proportions" class="nav-link" data-scroll-target="#option-1-difference-in-differences-of-proportions">Option 1: Difference in differences of proportions</a></li>
+  <li><a href="#option-2-logistic-regression" id="toc-option-2-logistic-regression" class="nav-link" data-scroll-target="#option-2-logistic-regression">Option 2: Logistic regression</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -702,9 +708,100 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>ors.adjust.glm <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(ors <span class="sc">~</span> survey_label <span class="sc">+</span> <span class="fu">as.factor</span>(v106) <span class="sc">+</span> <span class="fu">as.factor</span>(v190) <span class="sc">+</span> hv012 <span class="sc">+</span> toilet <span class="sc">+</span> rural, <span class="at">family =</span> quasibinomial, <span class="at">design =</span> svyset_merge, <span class="at">na.action =</span> na.omit)</span>
 <span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">data.frame</span>(<span class="at">OR =</span> <span class="fu">exp</span>(<span class="fu">coef</span>(ors.adjust.glm)), <span class="at">ci =</span> <span class="fu">exp</span>(<span class="fu">confint</span>(ors.adjust.glm)))) <span class="co">#create a table of results to include odds ratio + CI</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-
-
 </section>
+</section>
+</section>
+<section id="lecture-12-difference-in-differences-analysis-for-coverage" class="level1">
+<h1>Lecture 12: Difference-in-differences analysis for coverage</h1>
+<section id="setting-up-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-the-data">Setting-up the data</h3>
+<p>Stata code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cd <span class="st">"/Users/MY_NAME/Desktop/MPIE/data"</span> <span class="sc">/</span><span class="er">/</span>change this to directory where anc4_nigeria.dta is stored</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>use anc4_nigeria, clear</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>gen wgt<span class="ot">=</span>v005<span class="sc">/</span><span class="dv">1000000</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>svyset v001 [pw<span class="ot">=</span>wgt], <span class="fu">strata</span>(v023) <span class="fu">singleunit</span>(center)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>numlabel, add</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>gen survey<span class="ot">=</span><span class="dv">1</span> <span class="cf">if</span> v007<span class="sc">==</span><span class="dv">2013</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>replace survey<span class="ot">=</span><span class="dv">0</span> <span class="cf">if</span> v007<span class="sc">==</span><span class="dv">2008</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>gen program<span class="ot">=</span>region </span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>gen groups<span class="ot">=</span><span class="dv">0</span> <span class="cf">if</span> program<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> v007<span class="sc">==</span><span class="dv">2008</span>  <span class="sc">/</span><span class="er">*</span> intervention group at baseline <span class="sc">*</span><span class="er">/</span></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>replace groups<span class="ot">=</span><span class="dv">1</span> <span class="cf">if</span> program<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> v007<span class="sc">==</span><span class="dv">2013</span> <span class="sc">/</span><span class="er">*</span> intervention group at endline <span class="sc">*</span><span class="er">/</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>replace groups<span class="ot">=</span><span class="dv">2</span> <span class="cf">if</span> program<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> v007<span class="sc">==</span><span class="dv">2008</span> <span class="sc">/</span><span class="er">*</span> comparison group at baseline <span class="sc">*</span><span class="er">/</span></span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>replace groups<span class="ot">=</span><span class="dv">3</span> <span class="cf">if</span> program<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> v007<span class="sc">==</span><span class="dv">2013</span> <span class="sc">/</span><span class="er">*</span> comparison group at endline <span class="sc">*</span><span class="er">/</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"/Users/MY_NAME/Desktop/MPIE/data/anc4_nigeria.dta"</span>) <span class="co"># change this to where anc4_nigeria.dta is stored</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>generate.factors<span class="ot">=</span><span class="cn">TRUE</span><span class="er">)</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">wgt =</span> v005<span class="sc">/</span><span class="dv">1000000</span>) </span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>survey <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>survey[dat<span class="sc">$</span>v007<span class="sc">==</span><span class="dv">2013</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>survey[dat<span class="sc">$</span>v007<span class="sc">==</span><span class="dv">2008</span>] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>program <span class="ot">&lt;-</span> dat<span class="sc">$</span>region</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>groups <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>groups[dat<span class="sc">$</span>program<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>v007<span class="sc">==</span><span class="dv">2008</span>] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># intervention group at baseline #</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>groups[dat<span class="sc">$</span>program<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>v007<span class="sc">==</span><span class="dv">2013</span>] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># intervention group at endline #</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>groups[dat<span class="sc">$</span>program<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>v007<span class="sc">==</span><span class="dv">2008</span>] <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># comparison group at baseline #</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>groups[dat<span class="sc">$</span>program<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> dat<span class="sc">$</span>v007<span class="sc">==</span><span class="dv">2013</span>] <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="co"># comparison group at endline #</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>svydata <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(<span class="at">id=</span><span class="sc">~</span>v001, <span class="at">data=</span>dat, <span class="at">weights=</span><span class="sc">~</span>wgt, </span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">strata=</span><span class="sc">~</span>v023, <span class="at">survey.lonely.psu=</span><span class="st">"adjust"</span>, <span class="at">nest=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="option-1-difference-in-differences-of-proportions" class="level3">
+<h3 class="anchored" data-anchor-id="option-1-difference-in-differences-of-proportions">Option 1: Difference in differences of proportions</h3>
+<p>Stata code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop anc4, <span class="fu">over</span>(groups) </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>lincom [[_prop_2]<span class="dv">1</span> <span class="sc">-</span> [_prop_2]<span class="dv">0</span>] <span class="sc">-</span> [[_prop_2]<span class="dv">3</span> <span class="sc">-</span> [_prop_2]<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>R code</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>anc4_dat <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>anc4, <span class="sc">~</span>groups, svydata, svyciprop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">"se"</span>,<span class="st">"ci"</span>), <span class="at">method =</span> <span class="st">"logit"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>anc4_dat</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>anc4_diff <span class="ot">&lt;-</span> <span class="fu">svycontrast</span>(anc4_dat, <span class="fu">quote</span>((<span class="st">`</span><span class="at">1</span><span class="st">`</span><span class="sc">-</span><span class="st">`</span><span class="at">0</span><span class="st">`</span>) <span class="sc">-</span> (<span class="st">`</span><span class="at">3</span><span class="st">`</span><span class="sc">-</span><span class="st">`</span><span class="at">2</span><span class="st">`</span>))) </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>anc4_diff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="option-2-logistic-regression" class="level3">
+<h3 class="anchored" data-anchor-id="option-2-logistic-regression">Option 2: Logistic regression</h3>
+<p>Stata code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>xi<span class="sc">:</span> svy<span class="sc">:</span> logit anc4 i.survey<span class="sc">*</span>i.program, or </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>lincom  _Isurvey_1 <span class="sc">+</span> _IsurXpro_1_1, or  </span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>svy<span class="sc">:</span> prop anc4, <span class="fu">over</span>(v007 region) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>anc.adjust.glm <span class="ot">&lt;-</span> <span class="fu">svyglm</span>(anc4 <span class="sc">~</span> <span class="fu">as.factor</span>(survey)<span class="sc">*</span><span class="fu">as.factor</span>(program), </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">family =</span> quasibinomial, <span class="at">design =</span> svydata, <span class="at">na.action =</span> na.omit)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">data.frame</span>(<span class="at">OR =</span> <span class="fu">exp</span>(<span class="fu">coef</span>(anc.adjust.glm)), <span class="at">ci =</span> <span class="fu">exp</span>(<span class="fu">confint</span>(anc.adjust.glm)))) </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>anc4_or <span class="ot">&lt;-</span> <span class="fu">svycontrast</span>(anc.adjust.glm, <span class="fu">quote</span>(<span class="st">`</span><span class="at">as.factor(survey)1</span><span class="st">`</span> <span class="sc">+</span> <span class="st">`</span><span class="at">as.factor(survey)1:as.factor(program)1</span><span class="st">`</span>)) </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(anc4_or)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(anc4 <span class="sc">==</span> <span class="dv">0</span>), <span class="sc">~</span>region<span class="sc">+</span>v007, <span class="at">design =</span> svydata, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(anc4 <span class="sc">==</span> <span class="dv">1</span>), <span class="sc">~</span>region<span class="sc">+</span>v007, <span class="at">design =</span> svydata, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
 </section>
 </section>
 
