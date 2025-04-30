@@ -503,6 +503,16 @@ kable(data.frame(OR = exp(coef(ors.adjust.glm)), ci = exp(confint(ors.adjust.glm
 
 # Lecture 12: Difference-in-differences analysis for coverage
 
+R users may need to load these libraries
+```{r, eval=FALSE}
+library(haven)
+library(readstata13)
+library(dplyr)
+library(survey)
+library(knitr)
+```
+
+
 ### Setting-up the data
 Stata code:
 ```{r, eval=FALSE}
@@ -528,7 +538,6 @@ replace groups=3 if program==0 & v007==2013 /* comparison group at endline */
 R code:
 ```{r, eval=FALSE}
 dat <- read_dta("/Users/MY_NAME/Desktop/MPIE/data/anc4_nigeria.dta") # change this to where anc4_nigeria.dta is stored
-generate.factors=TRUE)
 
 dat <- dat %>%
   mutate(wgt = v005/1000000) 
