@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.7.30">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-630147fbe0b9ab2b2a517857e522e257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-e36ce5c26c48eccda62d8cde5e438854.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -622,31 +622,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Need to establish need stratum for each survey because currently they are overlapped (i.e. same stratum value across both surveys)</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>merged <span class="ot">&lt;-</span> merged <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"stratum"</span>, <span class="fu">c</span>(survey_label, v023), <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="co"># creates a new column to create a new unique ID</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>merged<span class="sc">$</span>id <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">as.character</span>(merged<span class="sc">$</span>survey),<span class="st">"_"</span>,<span class="fu">as.character</span>(merged<span class="sc">$</span>v001),<span class="st">"_"</span>,<span class="fu">as.character</span>(merged<span class="sc">$</span>v002),<span class="st">"_"</span>,<span class="fu">as.character</span>(merged<span class="sc">$</span>v003),<span class="st">"_"</span>,<span class="fu">as.character</span>(merged<span class="sc">$</span>midx)) <span class="co"># PSU issue with cluster, so use this for id</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  svyset_merge <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># id = ~ v001, # Variable which represents the cluster</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="sc">~</span> id, <span class="co"># Variable which represents the cluster</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> merged, <span class="co"># The name of your data that you are using</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">weight =</span> <span class="sc">~</span> nwgt, <span class="co"># Here we use normalized weighting</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">strata =</span> <span class="sc">~</span> stratum, <span class="co"># Variable which represents the stratum</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">nest =</span> <span class="cn">TRUE</span>, <span class="co"># relabel cluster ids to enforce nesting within strata</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">survey.lonely.psu =</span> <span class="st">"adjust"</span>) <span class="co"># Single unit centered on STATA</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu=</span><span class="st">"adjust"</span>)</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(ors <span class="sc">==</span> <span class="dv">0</span>), <span class="sc">~</span>survey_label, <span class="at">design =</span> svyset_merge, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(ors <span class="sc">==</span> <span class="dv">1</span>), <span class="sc">~</span>survey_label, <span class="at">design =</span> svyset_merge, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>ors_merged <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>ors, <span class="sc">~</span>survey_label, svyset_merge, svyciprop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="st">"se"</span>, <span class="at">method =</span> <span class="st">"logit"</span>)</span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>ors_merged</span>
-<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">confint</span>(ors_merged)</span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>ors_diff <span class="ot">&lt;-</span> <span class="fu">svycontrast</span>(ors_merged, <span class="fu">quote</span>(<span class="st">`</span><span class="at">DHS 2013</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">DHS 2008</span><span class="st">`</span>)) <span class="co"># Standard error is needed to calculate the difference</span></span>
-<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>ors_diff<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(ors_diff)<span class="sc">*</span><span class="dv">100</span> <span class="co"># SE and CI are slightly different to STATA output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>merged<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">paste0</span>(merged<span class="sc">$</span>survey,<span class="st">"_"</span>,merged<span class="sc">$</span>v001)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>merged<span class="sc">$</span>stratum <span class="ot">&lt;-</span> <span class="fu">paste0</span>(merged<span class="sc">$</span>survey,<span class="st">"_"</span>,merged<span class="sc">$</span>v023)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  svyset_merge <span class="ot">&lt;-</span> <span class="fu">svydesign</span>(</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">id =</span> <span class="sc">~</span> cluster, <span class="co"># Variable which represents the cluster</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> merged, <span class="co"># The name of your data that you are using</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">weight =</span> <span class="sc">~</span> nwgt, <span class="co"># Here we use normalized weighting</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">strata =</span> <span class="sc">~</span> <span class="fu">factor</span>(stratum), <span class="co"># Variable which represents the stratum</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">nest =</span> <span class="cn">TRUE</span>, <span class="co"># relabel cluster ids to enforce nesting within strata</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">survey.lonely.psu =</span> <span class="st">"adjust"</span>) <span class="co"># Single unit centered on STATA</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu=</span><span class="st">"adjust"</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(ors <span class="sc">==</span> <span class="dv">0</span>), <span class="sc">~</span>survey_label, <span class="at">design =</span> svyset_merge, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(ors <span class="sc">==</span> <span class="dv">1</span>), <span class="sc">~</span>survey_label, <span class="at">design =</span> svyset_merge, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>ors_merged <span class="ot">&lt;-</span> <span class="fu">svyby</span>(<span class="sc">~</span>ors, <span class="sc">~</span>survey_label, svyset_merge, svyciprop, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="st">"se"</span>, <span class="at">method =</span> <span class="st">"logit"</span>)</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>ors_merged</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span><span class="sc">*</span><span class="fu">confint</span>(ors_merged)</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>ors_diff <span class="ot">&lt;-</span> <span class="fu">svycontrast</span>(ors_merged, <span class="fu">quote</span>(<span class="st">`</span><span class="at">DHS 2013</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">DHS 2008</span><span class="st">`</span>)) <span class="co"># Standard error is needed to calculate the difference</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>ors_diff<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(ors_diff)<span class="sc">*</span><span class="dv">100</span> <span class="co"># SE and CI are slightly different to STATA output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
