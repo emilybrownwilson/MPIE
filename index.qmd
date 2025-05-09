@@ -487,11 +487,10 @@ merged <- merged %>%
                            v025 == 2 ~ 1))
 
   svyset_merge <- svydesign(
-    # id = ~ v001, # Variable which represents the cluster
-    id = ~ id, # Variable which represents the unique id
+    id = ~ cluster, # Variable which represents the unique id
     data = merged, # The name of your data that you are using
     weight = ~ nwgt, # Here we use normalized weighting
-    strata = ~ stratum, # Variable which represents the stratum
+    strata = ~ factor(stratum), # Variable which represents the stratum
     nest = TRUE, # relabel cluster ids to enforce nesting within strata
     survey.lonely.psu = "adjust") # Single unit centered on STATA
 
