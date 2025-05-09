@@ -413,16 +413,14 @@ R code:
 ```{r, eval=FALSE}
 # Need to establish need stratum for each survey because currently they are overlapped (i.e. same stratum value across both surveys)
 
-merged <- merged %>%
-  unite("stratum", c(survey_label, v023), sep = "_", remove = FALSE) # creates a new column to create a new unique ID
-merged$id <- paste0(as.character(merged$survey),"_",as.character(merged$v001),"_",as.character(merged$v002),"_",as.character(merged$v003),"_",as.character(merged$midx)) # PSU issue with cluster, so use this for id
+merged$cluster <- paste0(merged$survey,"_",merged$v001)
+merged$stratum <- paste0(merged$survey,"_",merged$v023)
 
   svyset_merge <- svydesign(
-    # id = ~ v001, # Variable which represents the cluster
-    id = ~ id, # Variable which represents the cluster
+    id = ~ cluster, # Variable which represents the cluster
     data = merged, # The name of your data that you are using
     weight = ~ nwgt, # Here we use normalized weighting
-    strata = ~ stratum, # Variable which represents the stratum
+    strata = ~ factor(stratum), # Variable which represents the stratum
     nest = TRUE, # relabel cluster ids to enforce nesting within strata
     survey.lonely.psu = "adjust") # Single unit centered on STATA
 
