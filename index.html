@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.30">
+<meta name="generator" content="quarto-1.7.31">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e36ce5c26c48eccda62d8cde5e438854.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-630147fbe0b9ab2b2a517857e522e257.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -187,6 +187,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#setting-up-the-data" id="toc-setting-up-the-data" class="nav-link" data-scroll-target="#setting-up-the-data">Setting-up the data</a></li>
   <li><a href="#option-1-difference-in-differences-of-proportions" id="toc-option-1-difference-in-differences-of-proportions" class="nav-link" data-scroll-target="#option-1-difference-in-differences-of-proportions">Option 1: Difference in differences of proportions</a></li>
   <li><a href="#option-2-logistic-regression" id="toc-option-2-logistic-regression" class="nav-link" data-scroll-target="#option-2-logistic-regression">Option 2: Logistic regression</a></li>
+  </ul></li>
+  <li><a href="#lecture-16-analyzing-equity" id="toc-lecture-16-analyzing-equity" class="nav-link" data-scroll-target="#lecture-16-analyzing-equity">Lecture 16: Analyzing equity</a>
+  <ul class="collapse">
+  <li><a href="#new-packages-needed" id="toc-new-packages-needed" class="nav-link" data-scroll-target="#new-packages-needed">new packages needed</a></li>
+  <li><a href="#make-concentration-index-plot" id="toc-make-concentration-index-plot" class="nav-link" data-scroll-target="#make-concentration-index-plot">make concentration index plot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -802,6 +807,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(anc4 <span class="sc">==</span> <span class="dv">0</span>), <span class="sc">~</span>region<span class="sc">+</span>v007, <span class="at">design =</span> svydata, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span>
 <span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">svyby</span>(<span class="sc">~</span><span class="fu">I</span>(anc4 <span class="sc">==</span> <span class="dv">1</span>), <span class="sc">~</span>region<span class="sc">+</span>v007, <span class="at">design =</span> svydata, svyciprop, <span class="at">vartype=</span><span class="st">"ci"</span>, <span class="at">method =</span> <span class="st">"logit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="lecture-16-analyzing-equity" class="level1">
+<h1>Lecture 16: Analyzing equity</h1>
+<section id="new-packages-needed" class="level3">
+<h3 class="anchored" data-anchor-id="new-packages-needed">new packages needed</h3>
+<p>R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"healthequal"</span>) </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.package</span>(<span class="st">"gglorenz"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(healthequal)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggloernz)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="make-concentration-index-plot" class="level3">
+<h3 class="anchored" data-anchor-id="make-concentration-index-plot">make concentration index plot</h3>
+<p>R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span>subset_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">abs</span>(equity_variable))) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_lorenz</span>() <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">linetype =</span> <span class="st">"dashed"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
